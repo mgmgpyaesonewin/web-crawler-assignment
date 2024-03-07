@@ -1,0 +1,17 @@
+{
+  "name": "spider-api",
+  "version": "1.0.0",
+  "description": "Web Crawler API using puppeteer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pyae Sone Win",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^22.4.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "user-agents": "^1.1.136"
+  }
+}

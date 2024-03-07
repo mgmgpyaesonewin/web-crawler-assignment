@@ -1,4 +1,5 @@
 import Header from '@/app/(app)/Header'
+import { Button, Chip } from '@/components/MaterialLibrary'
 
 export const metadata = {
     title: 'Laravel - Dashboard',
@@ -14,6 +15,8 @@ const Dashboard = () => {
                         <div className="p-6 bg-white border-b border-gray-200">
                             You are logged in!
                         </div>
+                        <Button>Button</Button>
+                        <Chip value="chip" />
                     </div>
                 </div>
             </div>

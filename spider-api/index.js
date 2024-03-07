@@ -40,7 +40,6 @@ puppeteer.use(stealthPlugin());
     const h3Elements = Array.from(document.querySelectorAll('h3'));
     return h3Elements.map((h3) => {
       let contentNode = h3.closest('div');
-      // let source = contentNode.querySelector('div > div > div:first-child > div > div > span > a > div > div > div > span').innerText;
       let link = contentNode.querySelector('a').href;
 
       return {

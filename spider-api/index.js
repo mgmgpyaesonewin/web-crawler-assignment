@@ -7,15 +7,15 @@ puppeteer.use(stealthPlugin());
   // Launch the browser and open a new blank page
   const browser = await puppeteer.launch({
     headless: false,
-    args: [
-      `--proxy-server=http://185.199.229.156:7492`
-    ]
+    // args: [
+    //   `--proxy-server=http://185.199.229.156:7492`
+    // ]
   });
   const page = await browser.newPage();
-  await page.authenticate({
-    username: 'oytiacxc',
-    password: 'oiqk9w099a9s'
-  });
+  // await page.authenticate({
+  //   username: 'oytiacxc',
+  //   password: 'oiqk9w099a9s'
+  // });
 
   // Set User Agent
   const userAgent = new UserAgent({ deviceCategory: 'desktop' });

@@ -12,7 +12,7 @@ async function randomDelay() {
   await new Promise(resolve => setTimeout(resolve, delay));
 }
 
-(async () => {
+async function scrapePage(keywords) {
   const cluster = await Cluster.launch({
       concurrency: Cluster.CONCURRENCY_CONTEXT,
       maxConcurrency: 2,
@@ -84,11 +84,13 @@ async function randomDelay() {
       }
   });
 
-  cluster.queue('https://www.google.com/search?hl=en&q=ads');
-  cluster.queue('https://www.google.com/search?hl=en&q=rubic');
-  cluster.queue('https://www.google.com/search?hl=en&q=rog');
-  cluster.queue('https://www.google.com/search?hl=en&q=asus');
+  // Explode keywords by comma and queue them into cluster as urls
+  keywords.split(',').forEach(keyword => {
+    cluster.queue(`https://www.google.com/search?hl=en&q=${keyword}`);
+  });
 
   await cluster.idle();
   await cluster.close();
-})();
+};
+
+module.exports = scrapePage;

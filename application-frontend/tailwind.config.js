@@ -1,8 +1,7 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
-const withMT = require("@material-tailwind/react/utils/withMT");
+const defaultTheme = require('tailwindcss/defaultTheme')
 
-module.exports = withMT({
-    content: ['./src/**/*.js'],
+module.exports = {
+    content: ['./src/**/*.js', 'node_modules/flowbite-react/lib/esm/**/*.js'],
     darkMode: 'media',
     theme: {
         extend: {
@@ -16,5 +15,5 @@ module.exports = withMT({
             opacity: ['disabled'],
         },
     },
-    plugins: [require('@tailwindcss/forms')],
-});
+    plugins: [require('@tailwindcss/forms'), require('flowbite/plugin')],
+}

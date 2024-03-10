@@ -5,10 +5,14 @@ require('dotenv').config();
 const scrapePage = require('./cluster.js');
 
 const app = Consumer.create({
-  queueUrl: process.env.SQS_URL,
+  queueUrl: process.env.AWS_SQS_URL,
   handleMessage: async (message) => {
-    console.log('Message', message);
-    scrapePage(message.Body);
+    console.log('Received message:', message);
+    let data = JSON.parse(message.Body);
+    scrapePage({
+      keywords: data.url,
+      user_id: data.user_id
+    })
   },
   sqs: new SQSClient({
     region: process.env.AWS_REGION,

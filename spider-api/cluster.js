@@ -2,6 +2,7 @@ const { Cluster } = require('puppeteer-cluster');
 const UserAgent = require('user-agents');
 const puppeteer = require('puppeteer-extra');
 const stealthPlugin = require('puppeteer-extra-plugin-stealth');
+const callback = require('./callback');
 puppeteer.use(stealthPlugin());
 
 const minDelay = 2000; // Minimum delay in milliseconds (2 seconds)
@@ -12,17 +13,17 @@ async function randomDelay() {
   await new Promise(resolve => setTimeout(resolve, delay));
 }
 
-async function scrapePage(keywords) {
+async function scrapePage({ keywords, user_id }) {
   const cluster = await Cluster.launch({
       concurrency: Cluster.CONCURRENCY_CONTEXT,
       maxConcurrency: 2,
       puppeteer,
       puppeteerOptions: {
-        headless: false,
+        headless: true,
       }
   });
 
-  cluster.task(async ({ page, data: url }) => {
+  cluster.task(async ({ page, data: { url, user_id } }) => {
       try {
         // Set User Agent
         const userAgent = new UserAgent({ deviceCategory: 'desktop' });
@@ -49,12 +50,12 @@ async function scrapePage(keywords) {
         const data = await page.evaluate(() => {
           const h3Elements = Array.from(document.querySelectorAll('h3'));
           return h3Elements.map((h3) => {
-            let contentNode = h3.closest('div');
-            let link = contentNode.querySelector('a').href;
+            let contentNode = h3.closest('div');            
+            let link = contentNode.querySelector('a')?.href;
             return {
               title: h3.textContent.trim(),
               link,
-              contentNode: contentNode.outerHTML
+              htmlRaw: contentNode.outerHTML
             }
           });
         });
@@ -70,9 +71,17 @@ async function scrapePage(keywords) {
                       .map((sponsoredSpan) => sponsoredSpan.closest('div').outerHTML);
         });
       
-        console.log('Extracted data:', data.length);
-        console.log('Extracted counts:', counts);
-        console.log('Extracted sponsored:', sponsored.length);
+        // console.log('Extracted data:', data.length);
+        // console.log('Extracted counts:', counts);
+        // console.log('Extracted sponsored:', sponsored.length);
+
+        // Send data to callback API
+        callback({
+          user_id,
+          keyword: url.split('q=')[1],
+          total_result: counts,
+          contents: data
+        });
       }
       catch (error) {
         if (error.name === 'TimeoutError') {
@@ -86,7 +95,10 @@ async function scrapePage(keywords) {
 
   // Explode keywords by comma and queue them into cluster as urls
   keywords.split(',').forEach(keyword => {
-    cluster.queue(`https://www.google.com/search?hl=en&q=${keyword}`);
+    cluster.queue({
+      url: `https://www.google.com/search?hl=en&q=${keyword}`,
+      user_id: user_id
+    });
   });
 
   await cluster.idle();

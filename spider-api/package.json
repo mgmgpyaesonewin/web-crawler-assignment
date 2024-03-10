@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.1573.0",
+    "axios": "^1.6.7",
     "debug": "^4.3.4",
     "dotenv": "^16.4.5",
     "puppeteer": "^21.11.0",
@@ -18,5 +19,8 @@
     "puppeteer-extra-plugin-stealth": "^2.11.2",
     "sqs-consumer": "^8.2.0",
     "user-agents": "^1.1.136"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }

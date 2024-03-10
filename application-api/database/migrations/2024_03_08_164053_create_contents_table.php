@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
             $table->text('title');
-            $table->text('link');
-            $table->text('htmlRaw');
+            $table->text('link')->nullable();
+            $table->text('htmlRaw')->nullable();
             $table->enum('type', ['data', 'sponsored'])->default('data');
             $table->foreignId('keyword_id')->constrained();
             $table->timestamps();

@@ -18,7 +18,10 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/keywords', [App\Http\Controllers\AppController::class, 'keywords']);
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/keywords', [App\Http\Controllers\AppController::class, 'keywords']);
+});
+
 Route::get('/keywords/{keyword}', [App\Http\Controllers\AppController::class, 'keywordById']);
 
 Route::post('/initiate-spider', [App\Http\Controllers\AppController::class, 'initiateSpider']);

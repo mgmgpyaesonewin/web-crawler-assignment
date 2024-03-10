@@ -13,7 +13,22 @@ class AppController extends Controller
     // Get all keywords from the database
     public function keywords(): JsonResponse
     {
-        return response()->json(Keyword::all());
+        if (request()->input('search')) {
+            $keywords = auth()->user()->keywords()
+                ->where('name', 'like', '%' . request()->input('search') . '%')
+                ->orWhereHas('contents', function ($query) {
+                    $query->where('title', 'like', '%' . request()->input('search') . '%');
+                })
+                ->get();
+            $keywords->load('contents');
+
+            return response()->json($keywords);
+        }
+
+        $keywords = auth()->user()->keywords;
+        $keywords->load('contents');
+
+        return response()->json($keywords);
     }
 
     // Get a keyword by ID from the database
@@ -25,8 +40,10 @@ class AppController extends Controller
 
     public function initiateSpider(Request $request): JsonResponse
     {
-        Queue::connection('sqs')->pushRaw(
-            $request->input('url'),
+        Queue::connection('sqs')->pushRaw(json_encode([
+                'url' => $request->input('url'),
+                'user_id' => $request->user()->id ?? 1,
+            ]),
             env('SQS_PREFIX')
         );
 
@@ -40,7 +57,7 @@ class AppController extends Controller
         $keyword = Keyword::create([
             'name' => $request->input('keyword'),
             'total_result' => $request->input('total_result'),
-            'contents' => $request->input('contents'),
+            'user_id' => $request->input('user_id'),
         ]);
         $keyword->contents()->createMany($request->input('contents'));
 

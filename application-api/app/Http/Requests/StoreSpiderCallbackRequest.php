@@ -25,10 +25,11 @@ class StoreSpiderCallbackRequest extends FormRequest
         return [
             'keyword' => ['required', 'string', 'max:255'],
             'total_result' => ['string', 'max:255'],
+            'user_id' => ['required', 'integer', 'exists:users,id'],
             'contents' => ['required', 'array'],
             'contents.*.title' => ['string', 'max:255'],
-            'contents.*.link' => ['string', 'max:255'],
-            'contents.*.htmlRaw' => ['string', 'max:255'],
+            'contents.*.link' => ['string'],
+            'contents.*.htmlRaw' => ['string'],
         ];
     }
 }

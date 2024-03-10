@@ -17,8 +17,4 @@ Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
-Route::group(['middleware' => 'auth'], function () {
-    Route::post('/initiate-spider', [App\Http\Controllers\AppController::class, 'initiateSpider']);
-});
-
 require __DIR__.'/auth.php';

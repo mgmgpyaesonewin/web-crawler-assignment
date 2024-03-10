@@ -3,3 +3,50 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.search-result svg[focusable='false'] {
+    width: 18px;
+    height: 18px;
+}
+.search-result div {
+     /*position: relative !important;*/
+ }
+.search-result span:first-child a div {
+    display: flex;
+    align-items: center;
+}
+.search-result span:first-child a div span {
+    margin-right: 4px;
+}
+.search-result cite {
+    font-size: 14px;
+    opacity: 0.6;
+}
+.search-result > div > div > div {
+    display: none;
+}
+h5.search-main-title {
+    line-height: 0.3;
+    margin-top: 8px;
+}
+.search-result > div > div > span > a > br {
+    display: none;
+}
+.search-result > div > div > h3 > div > a > div {
+    display: flex;
+    align-items: center;
+}
+.search-result > div > div > h3 > div > a > hr {
+     display: none;
+ }
+a[aria-label='More results'] h3 > div {
+    display: flex;
+    align-items: center;
+}
+
+a[aria-label='More results'] hr {
+    display: none;
+}
+a.search-main-link {
+    word-break: break-all;
+}
+

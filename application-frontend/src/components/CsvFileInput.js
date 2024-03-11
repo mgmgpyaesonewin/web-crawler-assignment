@@ -1,42 +1,9 @@
 'use client'
 import { Badge, FileInput, Label } from 'flowbite-react'
-import { useEffect, useState } from 'react'
-import axios from '@/lib/axios'
+import { useKeywordUpload } from '@/hooks/keywordUpload'
 
 const CsvFileInput = () => {
-    const [keywords, setKeywords] = useState([])
-    const [processing, setProcessing] = useState(false)
-
-    const handleFileChange = e => {
-        const file = e.target.files[0]
-
-        if (file) {
-            const reader = new FileReader()
-            reader.onload = e => {
-                const text = e.target.result
-                // Split the text into an array of strings
-                setKeywords(text.split(','))
-            }
-            reader.readAsText(file)
-        }
-    }
-
-    useEffect(() => {
-        if (keywords.length > 0) {
-            axios
-                .post('/api/initiate-spider', {
-                    url: keywords.join(','),
-                })
-                .then(response => {
-                    setProcessing(true)
-                    console.log(response.data)
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        }
-    }, [keywords])
-
+    const { keywords, processing, handleFileChange } = useKeywordUpload()
     return (
         <>
             <div className="mb-2 block">

@@ -2,7 +2,7 @@ import Header from '@/app/(app)/Header'
 import Keywords from '@/components/Keywords'
 
 export const metadata = {
-    title: 'Laravel - Dashboard',
+    title: 'Web Crawler - Dashboard',
 }
 
 const Dashboard = async () => {

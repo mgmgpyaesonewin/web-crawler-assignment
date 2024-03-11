@@ -25,7 +25,7 @@ const Keywords = () => {
             <div className="flex w-full justify-end mb-4">
                 <div className="max-w-md w-full">
                     <div className="mb-2 block">
-                        <Label htmlFor="search" value="Search" />
+                        <Label htmlFor="search" value="Type to search" />
                     </div>
                     <TextInput
                         id="search"
@@ -34,13 +34,6 @@ const Keywords = () => {
                         onChange={e => setSearch(e.target.value)}
                         placeholder="Enter the keywords to search"
                         required
-                        helperText={
-                            <>
-                                <span className="text-gray-400 text-xs">
-                                    Press enter to Search
-                                </span>
-                            </>
-                        }
                     />
                 </div>
             </div>
@@ -52,7 +45,9 @@ const Keywords = () => {
                             {keywords.map(keyword => (
                                 <Button
                                     color={
-                                        data.id === keyword.id ? 'blue' : 'gray'
+                                        data?.id === keyword?.id
+                                            ? 'blue'
+                                            : 'gray'
                                     }
                                     pill
                                     size="xs"

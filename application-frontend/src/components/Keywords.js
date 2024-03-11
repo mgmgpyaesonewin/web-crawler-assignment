@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react'
 import { useApi } from '@/hooks/api'
 import { Button, Label, TextInput } from 'flowbite-react'
 import { Card } from 'flowbite-react'
+import { useDebounce } from '@/hooks/useDebounce'
 
 const Keywords = () => {
-    const [search, setSearch] = useState(null)
-    const { keywords } = useApi(search)
+    const [search, debouncedSearch, setSearch] = useDebounce('', 400)
+
+    const { keywords } = useApi(debouncedSearch)
     const [data, setData] = useState({
         id: 0,
         total_result: 0,

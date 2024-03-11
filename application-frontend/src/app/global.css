@@ -49,4 +49,9 @@ a[aria-label='More results'] hr {
 a.search-main-link {
     word-break: break-all;
 }
+@media (min-device-width: 320px) and (max-device-width: 690px){
+    h5.search-main-title {
+        line-height: 1;
+    }
+}
 

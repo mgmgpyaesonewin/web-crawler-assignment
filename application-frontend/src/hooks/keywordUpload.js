@@ -21,6 +21,7 @@ export const useKeywordUpload = () => {
                 const text = e.target.result
                 setKeywords(text.split(',').map(keyword => keyword.trim()))
             }
+            reader.onerror = () => setErrors([...errors, 'Error reading file'])
             reader.readAsText(file)
         }
 
@@ -37,6 +38,7 @@ export const useKeywordUpload = () => {
                     setProcessing(true)
                 })
                 .catch(error => {
+                    setErrors([...errors, 'Error initiating spider operation'])
                     console.error(error)
                 })
         }

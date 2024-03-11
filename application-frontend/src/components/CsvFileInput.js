@@ -3,7 +3,12 @@ import { Badge, FileInput, Label } from 'flowbite-react'
 import { useKeywordUpload } from '@/hooks/keywordUpload'
 
 const CsvFileInput = () => {
-    const { keywords, processing, handleFileChange } = useKeywordUpload()
+    const {
+        keywords,
+        processing,
+        errors,
+        handleFileChange,
+    } = useKeywordUpload()
     return (
         <>
             <div className="mb-2 block">
@@ -14,6 +19,12 @@ const CsvFileInput = () => {
                 accept=".csv"
                 onChange={handleFileChange}
             />
+            {errors.length > 0 &&
+                errors.map((error, index) => (
+                    <p key={index} className="text-red-500 text-sm">
+                        {error}
+                    </p>
+                ))}
             {keywords.length > 0 && processing && (
                 <div className="mt-4">
                     <p className="text-sm font-semibold">

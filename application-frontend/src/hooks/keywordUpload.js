@@ -19,7 +19,12 @@ export const useKeywordUpload = () => {
             const reader = new FileReader()
             reader.onload = e => {
                 const text = e.target.result
-                setKeywords(text.split(',').map(keyword => keyword.trim()))
+                const words = text.split(',').map(keyword => keyword.trim())
+                if (words.length > 100) {
+                    setErrors(['Only 100 keywords are allowed'])
+                    return
+                }
+                setKeywords(words)
             }
             reader.onerror = () => setErrors([...errors, 'Error reading file'])
             reader.readAsText(file)

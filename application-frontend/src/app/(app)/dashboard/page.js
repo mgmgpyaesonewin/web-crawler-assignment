@@ -9,7 +9,7 @@ const Dashboard = async () => {
     return (
         <>
             <Header title="Dashboard" />
-            <div className="py-12">
+            <div className="py-12 px-4 sm:px-0">
                 <Keywords />
             </div>
         </>

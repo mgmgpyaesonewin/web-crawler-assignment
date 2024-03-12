@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('keywords', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('total_result');
+            $table->string('total_result')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

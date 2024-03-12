@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Queue;
 
 class AppController extends Controller
 {
+    public function user(Request $request) {
+        return $request->user();
+    }
+
     // Get all keywords from the database
     public function keywords(): JsonResponse
     {

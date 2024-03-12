@@ -10,11 +10,27 @@ use Illuminate\Support\Facades\Queue;
 
 class AppController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * {"id":1,"name":"Pyae Sone Win","email":"pyae@gmail.com","email_verified_at":null,
+     * "created_at":"2024-03-12T10:40:33.000000Z","updated_at":"2024-03-12T10:40:33.000000Z"}
+     */
     public function user(Request $request) {
         return $request->user();
     }
 
-    // Get all keywords from the database
+    /**
+     * Get all keywords from the database
+     * @queryParam search string To Filter the keywords, optionally
+     * @return JsonResponse
+     * [{"id":1,"name":"zoro","total_result":"About 74,500,000 results (0.43 seconds)","user_id":1,
+     * "created_at":"2024-03-12T10:40:45.000000Z","updated_at":"2024-03-12T10:40:45.000000Z",
+     * "contents":[{"id":1,"title":"Roronoa Zoro | One Piece Wiki - Fandom",
+     * "link":"https://onepiece.fandom.com/wiki/Roronoa_Zoro","htmlRaw":"<div>This is a div</div>",
+     * "type":"data","keyword_id":1,"created_at":"2024-03-12T10:40:45.000000Z",
+     * "updated_at":"2024-03-12T10:40:45.000000Z"}]}]
+     */
     public function keywords(): JsonResponse
     {
         if (request()->input('search')) {
@@ -35,18 +51,33 @@ class AppController extends Controller
         return response()->json($keywords);
     }
 
-    // Get a keyword by ID from the database
+    /**
+     * Get a keyword by ID from the database
+     *
+     * @param Keyword $keyword
+     * @return JsonResponse
+     * {"id":1,"name":"zoro","total_result":"About 74,500,000 results (0.43 seconds)","user_id":1,
+     * "created_at":"2024-03-12T10:40:45.000000Z","updated_at":"2024-03-12T10:40:45.000000Z",
+     * "contents":[{"id":1,"title":"Roronoa Zoro | One Piece Wiki - Fandom",
+     * "link":"https://onepiece.fandom.com/wiki/Roronoa_Zoro","htmlRaw":"<div>This is a div</div>",
+     * "type":"data","keyword_id":1,"created_at":"2024-03-12T10:40:45.000000Z",
+     * "updated_at":"2024-03-12T10:40:45.000000Z"}]}
+     */
     public function keywordById(Keyword $keyword): JsonResponse
     {
         $keyword->load('contents');
         return response()->json($keyword);
     }
 
+    /**
+     * @param Request $request (URL required URL as comma seperated keywords
+     * @return JsonResponse
+     */
     public function initiateSpider(Request $request): JsonResponse
     {
         Queue::connection('sqs')->pushRaw(json_encode([
                 'url' => $request->input('url'),
-                'user_id' => $request->user()->id ?? 1,
+                'user_id' => $request->user()->id,
             ]),
             env('SQS_PREFIX')
         );
@@ -54,7 +85,15 @@ class AppController extends Controller
         return response()->json(['message' => 'Spider initiated']);
     }
 
-    // Save the spider results to the database from callback URL
+    /**
+     * Save the spider results to the database from callback URL
+     *
+     * @param StoreSpiderCallbackRequest $request
+     * @return JsonResponse
+     * {"user_id":9,"keyword":"where is myanmar","total_result":null,"contents":[{
+     * "title":"Geography of Myanmar - Wikipedia","link":"https://en.wikipedia.org/wiki/Geography_of_Myanmar",
+     * "htmlRaw":"<div>This is a html tag</div>"}]}
+     */
     public function spiderCallback(StoreSpiderCallbackRequest $request): JsonResponse
     {
         // Save the spider results to the database

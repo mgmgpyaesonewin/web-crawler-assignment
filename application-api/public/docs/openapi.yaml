@@ -1,0 +1,148 @@
+openapi: 3.0.3
+info:
+  title: 'Web Crawler API Docs'
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8000'
+paths:
+  /api/user:
+    get:
+      summary: ''
+      operationId: getApiUser
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  /api/keywords:
+    get:
+      summary: 'Get all keywords from the database'
+      operationId: getAllKeywordsFromTheDatabase
+      description: ''
+      parameters:
+        -
+          in: query
+          name: search
+          description: 'To Filter the keywords, optionally'
+          example: dolor
+          required: false
+          schema:
+            type: string
+            description: 'To Filter the keywords, optionally'
+            example: dolor
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  /api/initiate-spider:
+    post:
+      summary: ''
+      operationId: postApiInitiateSpider
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  '/api/keywords/{keyword_id}':
+    get:
+      summary: 'Get a keyword by ID from the database'
+      operationId: getAKeywordByIDFromTheDatabase
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: keyword_id
+        description: 'The ID of the keyword.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/spider-callback:
+    post:
+      summary: 'Save the spider results to the database from callback URL'
+      operationId: saveTheSpiderResultsToTheDatabaseFromCallbackURL
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                keyword:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: zn
+                total_result:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: xfvobmvrqskkki
+                user_id:
+                  type: integer
+                  description: ''
+                  example: 18
+                contents:
+                  type: array
+                  description: ''
+                  example:
+                    - omnis
+                  items:
+                    type: string
+              required:
+                - keyword
+                - user_id
+                - contents
+      security: []
+tags:
+  -
+    name: Endpoints
+    description: ''

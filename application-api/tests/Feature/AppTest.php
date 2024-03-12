@@ -52,14 +52,14 @@ class AppTest extends TestCase
 
         $response = $this->actingAs($user)->postJson(route('initiateSpider'), ['url' => $url]);
 
-        $response->assertStatus(200)
-            ->assertJson(['message' => 'Spider initiated']);
-
         Queue::shouldReceive('connection')->with('sqs')->andReturnSelf();
         Queue::shouldReceive('pushRaw')->with(json_encode([
             'url' => $url,
             'user_id' => $user->id,
         ]), env('SQS_PREFIX'))->andReturn(true);
+
+        $response->assertStatus(200)
+            ->assertJson(['message' => 'Spider initiated']);
     }
 
     public function testSpiderCallback()

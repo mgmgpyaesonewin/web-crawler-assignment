@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/auth'
 import Navigation from '@/app/(app)/Navigation'
 import Loading from '@/app/(app)/Loading'
 
+// eslint-disable-next-line no-unused-vars
 const AppLayout = ({ children, header }) => {
     const { user } = useAuth({ middleware: 'auth' })
 

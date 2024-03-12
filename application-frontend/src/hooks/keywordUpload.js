@@ -44,6 +44,7 @@ export const useKeywordUpload = () => {
                 })
                 .catch(error => {
                     setErrors([...errors, 'Error initiating spider operation'])
+                    // eslint-disable-next-line no-console
                     console.error(error)
                 })
         }

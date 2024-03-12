@@ -45,7 +45,10 @@ const Home = () => {
 
                                 <div className="ml-12">
                                     <div className="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                        This is a Laravel project that uses nodejs API for web crawling. It uses laravel as backend and react as frontend. It uses{' '}
+                                        This is a Laravel project that uses
+                                        nodejs API for web crawling. It uses
+                                        laravel as backend and react as
+                                        frontend. It uses{' '}
                                         <a
                                             href="https://laravel.com/docs/sanctum"
                                             className="underline">

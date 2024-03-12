@@ -1,4 +1,4 @@
-import {Flowbite, ThemeModeScript} from 'flowbite-react'
+import { Flowbite, ThemeModeScript } from 'flowbite-react'
 import '@/app/global.css'
 
 export const metadata = {

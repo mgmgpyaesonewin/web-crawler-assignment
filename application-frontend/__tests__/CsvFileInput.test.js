@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, act } from '@testing-library/react'
+import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import CsvFileInput from './../src/components/CsvFileInput'
 
@@ -32,11 +32,12 @@ describe('CsvFileInput', () => {
 
         const keywords = Array.from({ length: 105 }, (_, i) => `keyword${i}`)
         const file = new File([keywords], 'keywords.csv', { type: 'text/csv' })
-        await act(async () => {
-            fireEvent.change(fileInput, { target: { files: [file] } })
-        })
 
-        const errorMessage = screen.getByText('Only 100 keywords are allowed')
-        expect(errorMessage).toBeInTheDocument()
+        fireEvent.change(fileInput, { target: { files: [file] } })
+
+        await waitFor(async () => {
+            const errorMessage = screen.getByText('Only 100 keywords are allowed')
+            expect(errorMessage).toBeInTheDocument()
+        })
     })
 })

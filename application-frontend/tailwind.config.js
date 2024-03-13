@@ -2,7 +2,6 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
     content: ['./src/**/*.js', 'node_modules/flowbite-react/lib/esm/**/*.js'],
-    darkMode: 'media',
     theme: {
         extend: {
             fontFamily: {

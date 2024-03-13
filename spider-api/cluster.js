@@ -94,12 +94,16 @@ async function scrapePage({ keywords, user_id }) {
   });
 
   // Explode keywords by comma and queue them into cluster as urls
-  keywords.split(',').forEach((keyword) => {
-    cluster.queue({
-      url: `https://www.google.com/search?hl=en&q=${keyword}`,
-      user_id,
+  try {
+    keywords.split(',').forEach((keyword) => {
+      cluster.queue({
+        url: `https://www.google.com/search?hl=en&q=${keyword}`,
+        user_id,
+      });
     });
-  });
+  } catch (error) {
+    console.error('Error while queuing tasks:', error);
+  }
 
   await cluster.idle();
   await cluster.close();

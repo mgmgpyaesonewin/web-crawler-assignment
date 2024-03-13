@@ -19,11 +19,14 @@ class AppController extends Controller
     {
         if (request()->input('search')) {
             $keywords = auth()->user()->keywords()
-                ->where('name', 'like', '%' . request()->input('search') . '%')
-                ->orWhereHas('contents', function ($query) {
-                    $query->where('title', 'like', '%' . request()->input('search') . '%');
+                ->where(function ($query) {
+                    $query->where('name', 'like', '%' . request()->input('search') . '%')
+                        ->orWhereHas('contents', function ($subQuery) {
+                            $subQuery->where('title', 'like', '%' . request()->input('search') . '%');
+                        });
                 })
                 ->get();
+
             $keywords->load('contents');
 
             return response()->json($keywords);

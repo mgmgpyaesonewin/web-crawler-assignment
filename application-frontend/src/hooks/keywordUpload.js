@@ -19,7 +19,15 @@ export const useKeywordUpload = () => {
             const reader = new FileReader()
             reader.onload = e => {
                 const text = e.target.result
-                const words = text.split(',').map(keyword => keyword.trim())
+                const words = text
+                    .split(',')
+                    .map(keyword => keyword.trim())
+                    .filter(keyword => keyword !== '')
+
+                if (words.length < 1) {
+                    setErrors(['At least one keyword is required'])
+                    return
+                }
                 if (words.length > 100) {
                     setErrors(['Only 100 keywords are allowed'])
                     return

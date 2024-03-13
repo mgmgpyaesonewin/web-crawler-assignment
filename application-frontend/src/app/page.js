@@ -7,7 +7,7 @@ export const metadata = {
 const Home = () => {
     return (
         <>
-            <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+            <div className="relative flex items-top justify-center min-h-screen bg-gray-100 sm:items-center sm:pt-0">
                 <LoginLinks />
 
                 <div className="max-w-6xl mx-auto sm:px-6 lg:px-8">
@@ -23,9 +23,9 @@ const Home = () => {
                         </svg>
                     </div>
 
-                    <div className="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
+                    <div className="mt-8 bg-white overflow-hidden shadow sm:rounded-lg">
                         <div className="grid grid-cols-1 md:grid-cols-2">
-                            <div className="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
+                            <div className="p-6 border-t border-gray-200 md:border-l">
                                 <div className="flex items-center">
                                     <svg
                                         fill="none"
@@ -38,13 +38,13 @@ const Home = () => {
                                         <path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
 
-                                    <div className="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">
+                                    <div className="ml-4 text-lg leading-7 font-semibold text-white">
                                         Google Web Crawler
                                     </div>
                                 </div>
 
                                 <div className="ml-12">
-                                    <div className="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                                    <div className="mt-2 text-gray-600 text-sm">
                                         This is a Laravel project that uses
                                         nodejs API for web crawling. It uses
                                         laravel as backend and react as

@@ -174,5 +174,6 @@ The Thing Architecture in this context refers to a system designed for web crawl
   - The BE then forwards these results to the FE, where they are displayed to the user.
 
 
-
+### API Docs
+- https://crawler.bethesdamedical.co:8080/docs
 

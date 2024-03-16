@@ -25,8 +25,8 @@ const callback = async ({
   };
 
   axios.request(config)
-    .then((response) => {
-      console.log('Callback API sent', response);
+    .then(() => {
+      console.log('Callback API sent: ', data);
     })
     .catch((error) => {
       console.log(error);

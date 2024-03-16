@@ -68,6 +68,10 @@ class AppController extends Controller
      */
     public function initiateSpider(Request $request): JsonResponse
     {
+        $request->validate([
+            'url' => 'required|string',
+        ]);
+
         Queue::connection('sqs')->pushRaw(json_encode([
                 'url' => $request->input('url'),
                 'user_id' => $request->user()->id,

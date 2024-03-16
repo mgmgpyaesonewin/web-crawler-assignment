@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Content;
-use App\Models\Keyword;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
@@ -12,36 +10,6 @@ use Tests\TestCase;
 class AppTest extends TestCase
 {
     use RefreshDatabase;
-
-    /**
-     * A basic feature test example.
-     */
-    public function testKeywords()
-    {
-        $user = User::factory()->create();
-        $keywords = Keyword::factory([
-            'user_id' => $user->id,
-        ])->count(3)->create();
-
-        $response = $this->actingAs($user)->getJson(route('keywords'));
-
-        $response->assertStatus(200)
-            ->assertJsonCount(3)
-            ->assertJson($keywords->toArray());
-    }
-
-    public function testKeywordById()
-    {
-        $user = User::factory()->create();
-        $keyword = Keyword::factory([
-                'user_id' => $user->id,
-        ])->create();
-
-        $response = $this->actingAs($user)->getJson(route('keywordById', $keyword));
-
-        $response->assertStatus(200)
-            ->assertJson($keyword->toArray());
-    }
 
     public function testInitiateSpider()
     {

@@ -2,14 +2,14 @@ const { Consumer } = require('sqs-consumer');
 const { SQSClient } = require('@aws-sdk/client-sqs');
 require('dotenv').config();
 
-const scrapePage = require('./cluster');
+const { queueKeywords } = require('./cluster');
 
 const app = Consumer.create({
   queueUrl: process.env.AWS_SQS_URL,
   handleMessage: async (message) => {
     console.log('Received message:', message);
     const data = JSON.parse(message.Body);
-    scrapePage({
+    queueKeywords({
       keywords: data.url,
       user_id: data.user_id,
     });

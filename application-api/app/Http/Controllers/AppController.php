@@ -11,16 +11,6 @@ use Illuminate\Support\Facades\Queue;
 class AppController extends Controller
 {
     /**
-     * @param Request $request
-     * @return JsonResponse
-     * {"id":1,"name":"Pyae Sone Win","email":"pyae@gmail.com","email_verified_at":null,
-     * "created_at":"2024-03-12T10:40:33.000000Z","updated_at":"2024-03-12T10:40:33.000000Z"}
-     */
-    public function user(Request $request) {
-        return $request->user();
-    }
-
-    /**
      * Get all keywords from the database
      * @queryParam search string To Filter the keywords, optionally
      * @return JsonResponse
@@ -78,6 +68,10 @@ class AppController extends Controller
      */
     public function initiateSpider(Request $request): JsonResponse
     {
+        $request->validate([
+            'url' => 'required|string',
+        ]);
+
         Queue::connection('sqs')->pushRaw(json_encode([
                 'url' => $request->input('url'),
                 'user_id' => $request->user()->id,

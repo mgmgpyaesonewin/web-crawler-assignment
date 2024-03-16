@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedTokenController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AppController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/user', [App\Http\Controllers\AppController::class, 'user']);
-    Route::get('/keywords', [App\Http\Controllers\AppController::class, 'keywords'])->name('keywords');
-    Route::post('/initiate-spider', [App\Http\Controllers\AppController::class, 'initiateSpider'])
-        ->name('initiateSpider');
-    Route::get('/keywords/{keyword}', [App\Http\Controllers\AppController::class, 'keywordById'])->name('keywordById');
+    Route::get('/user', UserController::class)->name('user');
+    Route::get('/keywords', [AppController::class, 'keywords'])->name('keywords');
+    Route::get('/keywords/{keyword}', [AppController::class, 'keywordById'])->name('keyword.show');
+    Route::post('/initiate-spider', [AppController::class, 'initiateSpider'])->name('spider.initiate');
 });
+Route::post('/spider-callback', [AppController::class, 'spiderCallback'])->name('spider.callback');
 
-Route::post('/spider-callback', [App\Http\Controllers\AppController::class, 'spiderCallback'])
-    ->name('spiderCallback');
+Route::post('/login', [AuthenticatedTokenController::class, 'store'])
+    ->middleware('guest')
+    ->name('login');

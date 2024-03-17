@@ -7,6 +7,10 @@
 #searchform {
    position: relative;
    cursor: not-allowed;
+
+}
+#searchform textarea {
+    pointer-events: none;
 }
 
 img[alt="Google"] {

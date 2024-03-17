@@ -18,7 +18,7 @@ const KeywordDetail = ({ id }) => {
     if (!id) {
         return (
             <div className="my-4">
-                <p>No Data Found ...</p>
+                <p>No Data Found...</p>
             </div>
         )
     }
@@ -52,7 +52,7 @@ const KeywordDetail = ({ id }) => {
             {showContent && (
                 <>
                     <Card className="page-content">
-                        <p>Cached Content</p>
+                        <p>Cached View</p>
                         <div
                             dangerouslySetInnerHTML={{
                                 __html: data.page_content,

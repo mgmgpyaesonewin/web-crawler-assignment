@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('keywords', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->text('name');
+            $table->mediumText('page_content')->nullable();
+            $table->integer('ads_count')->default(0);
+            $table->integer('links_count')->default(0);
             $table->string('total_result')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->timestamps();

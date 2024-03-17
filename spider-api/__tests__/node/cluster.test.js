@@ -1,6 +1,5 @@
 const { Cluster } = require('puppeteer-cluster');
-const axios = require('axios');
-const { randomDelay, queueKeywords } = require('../../cluster');
+const { randomDelay, queueKeywords } = require('../../src/cluster');
 
 jest.mock('puppeteer-cluster', () => ({
   Cluster: {

@@ -10,7 +10,7 @@ class Keyword extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'total_result', 'user_id'];
+    protected $fillable = ['name', 'total_result', 'user_id', 'ads_count', 'links_count', 'page_content'];
 
     public function contents(): HasMany
     {

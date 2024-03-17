@@ -5,7 +5,7 @@ const {
   getAdwordsCounts,
   getTotalLinksCount,
   getContent,
-} = require('../../scraper');
+} = require('../../src/scraper');
 
 describe('Browser Setting for scraping', () => {
   beforeEach(async () => {

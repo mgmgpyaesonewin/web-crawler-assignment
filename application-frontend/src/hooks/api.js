@@ -7,14 +7,25 @@ export const useApi = (search = null) => {
         url =>
             axios
                 .get(url)
-                .then(res => res.data)
+                .then(res => res.data?.keywords)
                 .catch(error => {
                     if (error.response.status !== 409) throw error
                 }),
     )
 
+    const getKeywordById = async id => {
+        try {
+            const response = await axios.get(`/api/keywords/${id}`)
+            return response.data
+        } catch (error) {
+            if (error.response?.status !== 409) throw error
+            return null // or handle the error as needed
+        }
+    }
+
     return {
         keywords,
+        getKeywordById,
         error,
         mutate,
     }

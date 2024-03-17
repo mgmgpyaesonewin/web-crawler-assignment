@@ -44,7 +44,7 @@ export const useKeywordUpload = () => {
     useEffect(() => {
         if (keywords.length > 0) {
             axios
-                .post('/api/initiate-spider', {
+                .post('/api/spider', {
                     url: keywords.join(','),
                 })
                 .then(() => {

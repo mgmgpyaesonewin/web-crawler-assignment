@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\KeywordResource;
 use App\Models\Keyword;
 use Illuminate\Http\JsonResponse;
 
@@ -37,15 +38,16 @@ class KeywordController extends Controller
                 })
                 ->get();
 
-            $keywords->load('contents');
-
-            return response()->json($keywords);
+            return response()->json([
+                'keywords' => KeywordResource::collection($keywords)
+            ]);
         }
 
         $keywords = auth()->user()->keywords;
-        $keywords->load('contents');
 
-        return response()->json($keywords);
+        return response()->json([
+            'keywords' => KeywordResource::collection($keywords)
+        ]);
     }
 
     /**

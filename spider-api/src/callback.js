@@ -6,12 +6,18 @@ const callback = async ({
   keyword,
   total_result,
   contents,
+  adsCount,
+  linksCount,
+  pageContent,
 }) => {
   const data = JSON.stringify({
     user_id,
-    keyword,
+    name: keyword,
     total_result,
     contents,
+    ads_count: adsCount,
+    links_count: linksCount,
+    page_content: pageContent,
   });
 
   const config = {

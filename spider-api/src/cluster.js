@@ -50,6 +50,9 @@ async function queueKeywords({ keywords, user_id }) {
   await cluster.close();
 }
 
+// Initialize the cluster
+// queueKeywords({ keywords: 'puppeteer, cluster, scraping', user_id: 1 });
+
 module.exports = {
   queueKeywords,
   randomDelay,

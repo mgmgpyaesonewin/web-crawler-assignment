@@ -3,6 +3,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#searchform {
+   position: relative;
+   cursor: not-allowed;
+}
+
+img[alt="Google"] {
+    display: none;
+}
+
 .search-result svg[focusable='false'] {
     width: 18px;
     height: 18px;

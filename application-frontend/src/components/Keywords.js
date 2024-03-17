@@ -63,7 +63,14 @@ const Keywords = () => {
                     )}
                 </div>
             </div>
-            <KeywordDetail id={data.id} />
+            {data?.id === 0 && (
+                <div className="p-6 bg-white border-b border-gray-200">
+                    <p className="text-2xl font-bold mb-4">
+                        Please select a keyword to view the details
+                    </p>
+                </div>
+            )}
+            {data?.id !== 0 && <KeywordDetail id={data?.id} />}
         </div>
     )
 }

@@ -30,8 +30,7 @@ async function getTitleAndData(page) {
 }
 
 async function getTotalCount(page) {
-  const counts = await page.evaluate(() => document.querySelector('div#appbar')?.innerText || '');
-  return counts;
+  await page.evaluate(() => document.querySelector('div#appbar')?.innerText || '');
 }
 
 async function getAdwordsCounts(page) {
@@ -43,13 +42,11 @@ async function getAdwordsCounts(page) {
 }
 
 async function getTotalLinksCount(page) {
-  const linksCount = await page.evaluate(() => Array.from(document.querySelectorAll('a')).length);
-  return linksCount;
+  await page.evaluate(() => Array.from(document.querySelectorAll('a')).length);
 }
 
 async function getContent(page) {
-  const content = await page.content();
-  return content;
+  await page.content();
 }
 
 async function scrapePage(page, url, user_id) {
@@ -60,7 +57,7 @@ async function scrapePage(page, url, user_id) {
   const counts = await getTotalCount(page);
   const { adsCount } = await getAdwordsCounts(page);
   const linksCount = await getTotalLinksCount(page);
-  const content = await getContent(page);
+  const pageContent = await getContent(page);
 
   const result = {
     user_id,
@@ -69,12 +66,12 @@ async function scrapePage(page, url, user_id) {
     contents: data,
     adsCount,
     linksCount,
-    content,
+    pageContent,
   };
 
   console.log('result', result);
 
-  callback(result);
+  await callback(result);
   return result;
 }
 

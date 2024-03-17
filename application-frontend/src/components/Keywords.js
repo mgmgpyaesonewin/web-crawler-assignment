@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react'
 import { useApi } from '@/hooks/api'
 import { Button, Label, TextInput } from 'flowbite-react'
-import { Card } from 'flowbite-react'
 import { useDebounce } from '@/hooks/useDebounce'
+import KeywordDetail from '@/components/KeywordDetail'
 
 const Keywords = () => {
     const [search, debouncedSearch, setSearch] = useDebounce('', 400)
@@ -12,8 +12,7 @@ const Keywords = () => {
     const { keywords } = useApi(debouncedSearch)
     const [data, setData] = useState({
         id: 0,
-        total_result: 0,
-        contents: [],
+        name: '',
     })
 
     useEffect(() => {
@@ -64,29 +63,14 @@ const Keywords = () => {
                     )}
                 </div>
             </div>
-            <p className="lg:my-2">Total Result: {data?.total_result}</p>
-            {data?.contents?.map((item, index) => (
-                <Card
-                    href="#"
-                    className="max-w-7xl mx-auto my-2 md:my-4 lg:my-4 sm:px-6 lg:px-8"
-                    key={index}>
-                    <div className="search-result">
-                        <div
-                            dangerouslySetInnerHTML={{ __html: item.htmlRaw }}
-                        />
-                    </div>
-                    <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white search-main-title">
-                        {item.title}
-                    </h5>
-                    <a
-                        href={item.link}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="search-main-link">
-                        {item.link}
-                    </a>
-                </Card>
-            ))}
+            {data?.id === 0 && (
+                <div className="p-6 bg-white border-b border-gray-200">
+                    <p className="text-2xl font-bold mb-4">
+                        Please select a keyword to view the details
+                    </p>
+                </div>
+            )}
+            {data?.id !== 0 && <KeywordDetail id={data?.id} />}
         </div>
     )
 }

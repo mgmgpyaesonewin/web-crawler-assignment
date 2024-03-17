@@ -48,11 +48,14 @@ class SpiderController extends Controller
     public function callback(StoreSpiderCallbackRequest $request): JsonResponse
     {
         // Save the spider results to the database
-        $keyword = Keyword::create([
-            'name' => $request->input('keyword'),
-            'total_result' => $request->input('total_result'),
-            'user_id' => $request->input('user_id'),
-        ]);
+        $keyword = Keyword::create($request->only([
+            'name',
+            'total_result',
+            'user_id',
+            'ads_count',
+            'links_count',
+            'page_content'
+        ]));
         $keyword->contents()->createMany($request->input('contents'));
 
         return response()->json([

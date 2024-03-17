@@ -23,11 +23,14 @@ class StoreSpiderCallbackRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'keyword' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string'],
             'total_result' => ['nullable', 'string', 'max:255'],
             'user_id' => ['required', 'integer', 'exists:users,id'],
+            'ads_count' => ['nullable', 'integer'],
+            'links_count' => ['nullable', 'integer'],
+            'page_content' => ['nullable', 'string'],
             'contents' => ['required', 'array'],
-            'contents.*.title' => ['string', 'max:255'],
+            'contents.*.title' => ['string'],
             'contents.*.link' => ['string'],
             'contents.*.htmlRaw' => ['string'],
         ];

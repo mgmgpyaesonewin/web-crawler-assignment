@@ -5,12 +5,12 @@
             "key": "baseUrl",
             "type": "string",
             "name": "string",
-            "value": "http:\/\/localhost:8000"
+            "value": "http:\/\/localhost"
         }
     ],
     "info": {
         "name": "Web Crawler API Docs",
-        "_postman_id": "e5edf620-5921-4e7c-aa2c-659fe5e42554",
+        "_postman_id": "0dfd402b-e7ab-44f9-aa9b-2dd5c9b334f9",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -72,6 +72,43 @@
                     ]
                 },
                 {
+                    "name": "Handle an incoming authentication request.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"nicola.kassulke@example.com\",\"password\":\"~P]ge6+UR{ZzG%P\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Keyword management",
+            "description": "",
+            "item": [
+                {
                     "name": "Get all keywords from the database",
                     "request": {
                         "url": {
@@ -80,12 +117,12 @@
                             "query": [
                                 {
                                     "key": "search",
-                                    "value": "dolor",
+                                    "value": "sequi",
                                     "description": "To Filter the keywords, optionally",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/keywords?search=dolor"
+                            "raw": "{{baseUrl}}\/api\/keywords?search=sequi"
                         },
                         "method": "GET",
                         "header": [
@@ -129,34 +166,6 @@
                             "name": ""
                         }
                     ]
-                },
-                {
-                    "name": "POST api\/initiate-spider",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/initiate-spider",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/initiate-spider"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
                 },
                 {
                     "name": "Get a keyword by ID from the database",
@@ -217,15 +226,21 @@
                             "name": ""
                         }
                     ]
-                },
+                }
+            ]
+        },
+        {
+            "name": "Spider AIP endpoints",
+            "description": "",
+            "item": [
                 {
-                    "name": "Save the spider results to the database from callback URL",
+                    "name": "POST api\/spider",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/spider-callback",
+                            "path": "api\/spider",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/spider-callback"
+                            "raw": "{{baseUrl}}\/api\/spider"
                         },
                         "method": "POST",
                         "header": [
@@ -240,7 +255,38 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"keyword\":\"zn\",\"total_result\":\"xfvobmvrqskkki\",\"user_id\":18,\"contents\":[\"omnis\"]}"
+                            "raw": "{\"url\":\"http:\\\/\\\/mayer.org\\\/recusandae-odio-quidem-ratione-temporibus-aut-aut.html\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Save the spider results to the database from callback URL",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/spider\/callback",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/spider\/callback"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"keyword\":\"jbymmppxrboioxp\",\"total_result\":\"khvuyjvs\",\"user_id\":6,\"contents\":[\"id\"]}"
                         },
                         "description": "",
                         "auth": {

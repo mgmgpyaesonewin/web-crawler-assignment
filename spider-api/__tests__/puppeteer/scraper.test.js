@@ -27,7 +27,12 @@ describe('Browser Setting for scraping', () => {
 describe('Scraping Google Search Results', () => {
   beforeEach(async () => {
     await setUserAgentAndViewport(page);
-    await page.goto('https://www.google.com/search?hl=en&q=puppeteer');
+    const isMock = process.env.TEST_MOCK_PUPPETEER;
+    if (isMock) {
+      await page.goto(`file://${__dirname}/mock/fake-google.html`);
+    } else {
+      await page.goto('https://www.google.com/search?hl=en&q=puppeteer');
+    }
   });
 
   it('should get title and data', async () => {

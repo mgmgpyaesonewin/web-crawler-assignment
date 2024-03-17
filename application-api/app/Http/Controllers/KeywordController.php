@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSpiderCallbackRequest;
 use App\Models\Keyword;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Queue;
 
-class AppController extends Controller
+
+/**
+ * @group Keyword management
+ *
+ * APIs for managing keywords
+ */
+class KeywordController extends Controller
 {
     /**
+     * @group Keyword management
      * Get all keywords from the database
      * @queryParam search string To Filter the keywords, optionally
      * @return JsonResponse
@@ -21,7 +25,7 @@ class AppController extends Controller
      * "type":"data","keyword_id":1,"created_at":"2024-03-12T10:40:45.000000Z",
      * "updated_at":"2024-03-12T10:40:45.000000Z"}]}]
      */
-    public function keywords(): JsonResponse
+    public function index(): JsonResponse
     {
         if (request()->input('search')) {
             $keywords = auth()->user()->keywords()
@@ -45,6 +49,7 @@ class AppController extends Controller
     }
 
     /**
+     * @group Keyword management
      * Get a keyword by ID from the database
      *
      * @param Keyword $keyword
@@ -56,53 +61,9 @@ class AppController extends Controller
      * "type":"data","keyword_id":1,"created_at":"2024-03-12T10:40:45.000000Z",
      * "updated_at":"2024-03-12T10:40:45.000000Z"}]}
      */
-    public function keywordById(Keyword $keyword): JsonResponse
+    public function show(Keyword $keyword): JsonResponse
     {
         $keyword->load('contents');
         return response()->json($keyword);
-    }
-
-    /**
-     * @param Request $request (URL required URL as comma seperated keywords
-     * @return JsonResponse
-     */
-    public function initiateSpider(Request $request): JsonResponse
-    {
-        $request->validate([
-            'url' => 'required|string',
-        ]);
-
-        Queue::connection('sqs')->pushRaw(json_encode([
-                'url' => $request->input('url'),
-                'user_id' => $request->user()->id,
-            ]),
-            env('SQS_PREFIX')
-        );
-
-        return response()->json(['message' => 'Spider initiated']);
-    }
-
-    /**
-     * Save the spider results to the database from callback URL
-     *
-     * @param StoreSpiderCallbackRequest $request
-     * @return JsonResponse
-     * {"user_id":9,"keyword":"where is myanmar","total_result":null,"contents":[{
-     * "title":"Geography of Myanmar - Wikipedia","link":"https://en.wikipedia.org/wiki/Geography_of_Myanmar",
-     * "htmlRaw":"<div>This is a html tag</div>"}]}
-     */
-    public function spiderCallback(StoreSpiderCallbackRequest $request): JsonResponse
-    {
-        // Save the spider results to the database
-        $keyword = Keyword::create([
-            'name' => $request->input('keyword'),
-            'total_result' => $request->input('total_result'),
-            'user_id' => $request->input('user_id'),
-        ]);
-        $keyword->contents()->createMany($request->input('contents'));
-
-        return response()->json([
-            'message' => 'Spider results saved'
-        ]);
     }
 }

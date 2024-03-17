@@ -5,7 +5,7 @@ info:
   version: 1.0.0
 servers:
   -
-    url: 'http://localhost:8000'
+    url: 'http://localhost'
 paths:
   /api/user:
     get:
@@ -29,6 +29,34 @@ paths:
       tags:
         - Endpoints
       security: []
+  /api/login:
+    post:
+      summary: 'Handle an incoming authentication request.'
+      operationId: handleAnIncomingAuthenticationRequest
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: nicola.kassulke@example.com
+                password:
+                  type: string
+                  description: ''
+                  example: '~P]ge6+UR{ZzG%P'
+              required:
+                - email
+                - password
+      security: []
   /api/keywords:
     get:
       summary: 'Get all keywords from the database'
@@ -39,12 +67,12 @@ paths:
           in: query
           name: search
           description: 'To Filter the keywords, optionally'
-          example: dolor
+          example: sequi
           required: false
           schema:
             type: string
             description: 'To Filter the keywords, optionally'
-            example: dolor
+            example: sequi
       responses:
         401:
           description: ''
@@ -59,17 +87,7 @@ paths:
                     type: string
                     example: Unauthenticated.
       tags:
-        - Endpoints
-      security: []
-  /api/initiate-spider:
-    post:
-      summary: ''
-      operationId: postApiInitiateSpider
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - Endpoints
+        - 'Keyword management'
       security: []
   '/api/keywords/{keyword_id}':
     get:
@@ -91,7 +109,7 @@ paths:
                     type: string
                     example: Unauthenticated.
       tags:
-        - Endpoints
+        - 'Keyword management'
       security: []
     parameters:
       -
@@ -102,7 +120,30 @@ paths:
         required: true
         schema:
           type: integer
-  /api/spider-callback:
+  /api/spider:
+    post:
+      summary: ''
+      operationId: postApiSpider
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Spider AIP endpoints'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: ''
+                  example: 'http://mayer.org/recusandae-odio-quidem-ratione-temporibus-aut-aut.html'
+              required:
+                - url
+      security: []
+  /api/spider/callback:
     post:
       summary: 'Save the spider results to the database from callback URL'
       operationId: saveTheSpiderResultsToTheDatabaseFromCallbackURL
@@ -110,7 +151,7 @@ paths:
       parameters: []
       responses: {  }
       tags:
-        - Endpoints
+        - 'Spider AIP endpoints'
       requestBody:
         required: true
         content:
@@ -121,20 +162,20 @@ paths:
                 keyword:
                   type: string
                   description: 'Must not be greater than 255 characters.'
-                  example: zn
+                  example: jbymmppxrboioxp
                 total_result:
                   type: string
                   description: 'Must not be greater than 255 characters.'
-                  example: xfvobmvrqskkki
+                  example: khvuyjvs
                 user_id:
                   type: integer
                   description: ''
-                  example: 18
+                  example: 6
                 contents:
                   type: array
                   description: ''
                   example:
-                    - omnis
+                    - id
                   items:
                     type: string
               required:
@@ -145,4 +186,10 @@ paths:
 tags:
   -
     name: Endpoints
+    description: ''
+  -
+    name: 'Keyword management'
+    description: ''
+  -
+    name: 'Spider AIP endpoints'
     description: ''
